@@ -98,7 +98,7 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Password</label>
                                         <div class="col-md-12">
-                                            <input type="password" value="{{Auth::user()->password}}" class="form-control form-control-line" name="password">
+                                            <input type="password" class="form-control form-control-line" name="password">
                                         </div>
                                     </div>
                                     <div class="form-group">

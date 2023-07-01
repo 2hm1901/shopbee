@@ -1,7 +1,40 @@
 @extends('frontend.layouts.app');
 @section('content')
+<div class="signup-form">
+						<form method="post" enctype="multipart/form-data">
+							@csrf
+							<input type="text" name="search" placeholder="Name">
+							<select name="price">
+								<option value="">Choose price</option>
+								<option value="100-500">100-500</option>
+								<option value="500-1000">500-1000</option>
+								<option value="1000-1500">1000-1500</option>
+							</select>
+							<select name="id_brand">
+							<option value="">Select brand</option>
+                            @foreach($brand as $key => $value)
+        					<option value="{{$value->id}}">{{$value->name}}</option>
+                            @endforeach
+                        	</select>
+                            <select class="form-control form-control-line" name="id_category">
+                            <option value="">Select category</option>
+                            @foreach($category as $key => $value)
+        					<option value="{{$value->id}}">{{$value->name}}</option>
+                            @endforeach
+                            </select>
+                            <select class="form-control form-control-line" name="status" id="status">
+                            <option value="">Status</option>
+        					<option value="0">Sales</option>
+        					<option value="1">New</option>
+                            </select>
+							<button type="submit" class="btn btn-default">Search</button>
+							
+						</form>
+					</div>
 <div class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
+						
+
 						@foreach($data as $key => $value)
 						<div class="col-sm-4">
 							<div class="product-image-wrapper">
@@ -588,8 +621,56 @@
 			        $("li#cart").find("a").text("Cart" + data.success);
 			   	}
 			});
+		});
+		$('.price-range').click(function(){
+			var value = $('.tooltip-inner').text();
+			$.ajax({
+				type: 'POST',
+				url: "{{url('/ajaxRange')}}",
+				data:{
+					value: value
+				},
+				success:function(data){
+					console.log(data.success);
+					
+					var html = '<h2 class="title text-center">Features Items</h2>';
+					Object.keys(data.success).map((key, value) => {
 
-		})
+						console.log(data.success);
+						var img = JSON.parse(data.success[key]['images']);
+						var hinhanh = "{{url('upload/product/hinh200_')}}" + img[0];
+
+						html += '<div class="col-sm-4">' +
+							'<div class="product-image-wrapper">' +
+								'<div class="single-products">' +
+										'<div class="productinfo text-center">' +
+											
+				'<img src="' + hinhanh + '" alt="" />' +
+											'<h2>$' + data.success[key]['price'] + '</h2>' +
+											'<p id=' + data.success[key]['id'] + '>' + data.success[key]['name'] + '</p>' +
+											'<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
+										'</div>' +
+										'<div class="product-overlay">' +
+											'<div class="overlay-content">' +
+												'<h2>' + data.success[key]['price'] + '</h2>' +
+												'<p>' + data.success[key]['name'] + '</p>' +
+												'<a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>' +
+											'</div>' +
+										'</div>' +
+								'</div>' +
+								'<div class="choose">' +
+									'<ul class="nav nav-pills nav-justified">' +
+										'<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>' +
+										'<li><a href="/product-details/"' + data.success[key]['id'] + '><i class="fa fa-plus-square"></i>Detail</a></li>' +
+									'</ul>' +
+								'</div>' +
+							'</div>' +
+						'</div>'
+					});
+					$("div.features_items").html(html);
+				}
+			});
+		});
 	});
 </script>
 @endsection

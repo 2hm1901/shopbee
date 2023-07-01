@@ -114,7 +114,11 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<form method="post">
+							@csrf
+							<input type="text" name="search" placeholder="Search"/>
+							<button type="submit">Search</button>
+							</form>
 						</div>
 					</div>
 				</div>

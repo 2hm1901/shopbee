@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\MailController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CountryController;
@@ -131,6 +133,9 @@ Route::prefix('blog.html')->group(function(){
 
 //landing page
 Route::get('/', [HomeController::class, 'ShowLandingPage']);
+
+Route::post('/', [HomeController::class, 'Search']);
+Route::post('/ajaxRange', [HomeController::class, 'Range']);
 //product-detail
 Route::get('/product-details/{id}', [ProductController::class, 'ShowProductDetail']);
 //member//
@@ -176,6 +181,10 @@ Route::prefix('cart')->group(function(){
 
 });
 
+Route::get('/check-out', [CheckOutController::class, 'index']);
+Route::get('/mail', [MailController::class, 'index']);
+
+
 //logout
 Route::get('/logout', function(){
     Auth::logout();
@@ -183,7 +192,6 @@ Route::get('/logout', function(){
     session()->forget('totalQty.qty');
     return redirect('login.html');
 });
-
 
 
 

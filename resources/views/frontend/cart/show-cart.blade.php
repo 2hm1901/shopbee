@@ -138,7 +138,7 @@
 							<li>Total <span id="cart_total">${{$cart_total + 2}}</span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out">Check Out</a>
+							<a href="{{url('/check-out')}}" class="btn btn-default check_out">Check Out</a>
 					</div>
 				</div>
 			</div>

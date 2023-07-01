@@ -75,6 +75,7 @@ class CartController extends Controller
         }
         return response()->json($data);
     }
+    
     public function DecreaseProduct(){
         $id = $_POST['id'];
         $getSession = session()->get('cart');
