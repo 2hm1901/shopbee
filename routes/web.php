@@ -69,129 +69,153 @@ Route::post('/add', [DemoController::class, 'AddInfor']);
 
 // Route::get('/delete/{id}',[DemoController::class, 'DeleteInfor']);
 
+
+
+//PROJECT HERE
+
+
 //admin//
-//dashboard
-Route::prefix('admin')->group(function(){
+Auth::routes();
 
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['AdminAuth']
+], function(){
 
-Route::get('/dashboard', [DashboardController::class, 'ShowDashboard']);
+    //dashboard
+    Route::get('/dashboard', [DashboardController::class, 'ShowDashboard']);
 
-//profile
-Route::get('/pages-profile.html', [UserController::class, 'ShowProfile']);
-Route::get('/pages-profile.html', [UserController::class, 'ShowCountry']);
-Route::post('/pages-profile.html', [UserController::class, 'UpdateProfile']);
+    //profile
+    Route::get('/pages-profile.html', [UserController::class, 'ShowProfile']);
+    Route::get('/pages-profile.html', [UserController::class, 'ShowCountry']);
+    Route::post('/pages-profile.html', [UserController::class, 'UpdateProfile']);
 
-//country
-Route::get('country.html', [CountryController::class, 'ShowCountry']);
+    //country
+    Route::get('country.html', [CountryController::class, 'ShowCountry']);
 
-Route::get('country/add', [CountryController::class, 'ShowAddForm']);
-Route::post('country/add', [CountryController::class, 'AddCountry']);
+    Route::get('country/add', [CountryController::class, 'ShowAddForm']);
+    Route::post('country/add', [CountryController::class, 'AddCountry']);
 
-Route::get('country/edit/{id}', [CountryController::class, 'ShowEditForm']);
-Route::post('country/edit/{id}', [CountryController::class, 'EditCountry']);
+    Route::get('country/edit/{id}', [CountryController::class, 'ShowEditForm']);
+    Route::post('country/edit/{id}', [CountryController::class, 'EditCountry']);
 
-Route::get('country/delete/{id}', [CountryController::class, 'DeleteCountry']);
+    Route::get('country/delete/{id}', [CountryController::class, 'DeleteCountry']);
 
-//brand
-Route::get('brand.html', [BrandController::class, 'ShowBrand']);
+    //brand
+    Route::get('brand.html', [BrandController::class, 'ShowBrand']);
 
-Route::get('brand/add', [BrandController::class, 'ShowAddForm']);
-Route::post('brand/add', [BrandController::class, 'AddBrand']);
+    Route::get('brand/add', [BrandController::class, 'ShowAddForm']);
+    Route::post('brand/add', [BrandController::class, 'AddBrand']);
 
-Route::get('brand/edit/{id}', [BrandController::class, 'ShowEditForm']);
-Route::post('brand/edit/{id}', [BrandController::class, 'EditBrand']);
+    Route::get('brand/edit/{id}', [BrandController::class, 'ShowEditForm']);
+    Route::post('brand/edit/{id}', [BrandController::class, 'EditBrand']);
 
-Route::get('brand/delete/{id}', [BrandController::class, 'DeleteBrand']);
+    Route::get('brand/delete/{id}', [BrandController::class, 'DeleteBrand']);
 
-//category
-Route::get('category.html', [CategoryController::class, 'ShowCategory']);
+    //category
+    Route::get('category.html', [CategoryController::class, 'ShowCategory']);
 
-Route::get('category/add', [CategoryController::class, 'ShowAddForm']);
-Route::post('category/add', [CategoryController::class, 'AddCategory']);
+    Route::get('category/add', [CategoryController::class, 'ShowAddForm']);
+    Route::post('category/add', [CategoryController::class, 'AddCategory']);
 
-Route::get('category/edit/{id}', [CategoryController::class, 'ShowEditForm']);
-Route::post('category/edit/{id}', [CategoryController::class, 'EditCategory']);
+    Route::get('category/edit/{id}', [CategoryController::class, 'ShowEditForm']);
+    Route::post('category/edit/{id}', [CategoryController::class, 'EditCategory']);
 
-Route::get('category/delete/{id}', [CategoryController::class, 'DeleteCategory']);
+    Route::get('category/delete/{id}', [CategoryController::class, 'DeleteCategory']);
 
-//Blog
-Route::prefix('blog.html')->group(function(){
-    Route::get('/', [BlogController::class, 'ShowBlog']);
+    //Blog
+    Route::prefix('blog.html')->group(function(){
+        Route::get('/', [BlogController::class, 'ShowBlog']);
 
-    Route::get('add', [BlogController::class, 'ShowAddForm']);
-    Route::post('add', [BlogController::class, 'AddBlog']);
+        Route::get('add', [BlogController::class, 'ShowAddForm']);
+        Route::post('add', [BlogController::class, 'AddBlog']);
 
-    Route::get('edit/{id}', [BlogController::class, 'ShowEditForm']);
-    Route::post('edit/{id}', [BlogController::class, 'EditBlog']);
+        Route::get('edit/{id}', [BlogController::class, 'ShowEditForm']);
+        Route::post('edit/{id}', [BlogController::class, 'EditBlog']);
 
-    Route::get('delete/{id}', [BlogController::class, 'DeleteBlog']);
-});
-
-});
-
-//frontend//
-
-//landing page
-Route::get('/', [HomeController::class, 'ShowLandingPage']);
-
-Route::post('/', [HomeController::class, 'Search']);
-Route::post('/ajaxRange', [HomeController::class, 'Range']);
-//product-detail
-Route::get('/product-details/{id}', [ProductController::class, 'ShowProductDetail']);
-//member//
-Route::get('sign-up', [MemberController::class, 'ShowRegisterForm']);
-Route::post('sign-up', [MemberController::class, 'MemberRegister']);
-
-Route::get('login.html', [MemberController::class, 'ShowLoginForm']);
-Route::post('login.html', [MemberController::class, 'MemberLogin']);
-
-//blog
-Route::get('blog.html', [BlogMController::class, 'ShowBlog']);
-Route::get('blog-single.html/{id}', [BlogMController::class, 'ShowBlogSingle']);
-Route::post('/blog/ajaxRate', [BlogMController::class, 'RateBlog']);
-Route::post('/blog/comment', [BlogMController::class, 'CommentBlog']);
-
-//account
-Route::prefix('account')->group(function(){
-    Route::get('/', [AccountController::class, 'ShowAccount']);
-    Route::post('/', [AccountController::class, 'UpdateAccount']);
-
-    //product
-    Route::prefix('product')->group(function(){
-        Route::get('/', [ProductController::class, 'ShowProductList']);
-
-        Route::get('/add', [ProductController::class, 'ShowAddForm']);
-        Route::post('/add', [ProductController::class, 'AddProduct']);
-
-        Route::get('/edit/{id}', [ProductController::class, 'ShowEditForm']);
-        Route::post('/edit/{id}', [ProductController::class, 'EditProduct']);
-
-        Route::get('/delete/{id}', [ProductController::class, 'DeleteProduct']);
+        Route::get('delete/{id}', [BlogController::class, 'DeleteBlog']);
     });
 });
 
-//cart
-Route::prefix('cart')->group(function(){
-    Route::get('/', [CartController::class, 'ShowCart']);
-    
-    Route::post('/ajaxBuy', [CartController::class, 'BuyProduct']);
-    Route::post('/ajaxIncrease', [CartController::class, 'IncreaseProduct']);
-    Route::post('/ajaxDecrease', [CartController::class, 'DecreaseProduct']);
-    Route::post('/ajaxDelete', [CartController::class, 'DeleteProduct']);
 
+
+
+
+//frontend//
+
+Route::group([
+    'namespace' => 'Frontend'
+], function(){
+    //landing page
+    Route::get('/', [HomeController::class, 'ShowLandingPage']);
+
+    Route::post('/', [HomeController::class, 'Search']);
+    Route::post('/ajaxRange', [HomeController::class, 'Range']);
+    //product-detail
+    Route::get('/product-details/{id}', [ProductController::class, 'ShowProductDetail']);
+
+    //member//
+    Route::group(['middleware' => 'MemberNotLoginAuth'], function(){
+        Route::get('sign-up', [MemberController::class, 'ShowRegisterForm']);
+        Route::post('sign-up', [MemberController::class, 'MemberRegister']);
+
+        Route::get('login.html', [MemberController::class, 'ShowLoginForm']);
+        Route::post('login.html', [MemberController::class, 'MemberLogin']);
+    });
+
+    //blog
+    Route::get('blog.html', [BlogMController::class, 'ShowBlog']);
+    Route::get('blog-single.html/{id}', [BlogMController::class, 'ShowBlogSingle']);
+    Route::post('/blog/ajaxRate', [BlogMController::class, 'RateBlog']);
+    Route::post('/blog/comment', [BlogMController::class, 'CommentBlog']);
+
+    //account
+    Route::group([
+        'prefix' => 'account',
+        'middleware' => 'MemberAuth'
+    ], function(){
+        Route::get('/', [AccountController::class, 'ShowAccount']);
+        Route::post('/', [AccountController::class, 'UpdateAccount']);
+
+        //product
+        Route::prefix('product')->group(function(){
+            Route::get('/', [ProductController::class, 'ShowProductList']);
+
+            Route::get('/add', [ProductController::class, 'ShowAddForm']);
+            Route::post('/add', [ProductController::class, 'AddProduct']);
+
+            Route::get('/edit/{id}', [ProductController::class, 'ShowEditForm']);
+            Route::post('/edit/{id}', [ProductController::class, 'EditProduct']);
+
+            Route::get('/delete/{id}', [ProductController::class, 'DeleteProduct']);
+        });
+    });
+
+    //cart
+    Route::prefix('cart')->group(function(){
+        Route::get('/', [CartController::class, 'ShowCart']);
+        
+        Route::post('/ajaxBuy', [CartController::class, 'BuyProduct']);
+        Route::post('/ajaxIncrease', [CartController::class, 'IncreaseProduct']);
+        Route::post('/ajaxDecrease', [CartController::class, 'DecreaseProduct']);
+        Route::post('/ajaxDelete', [CartController::class, 'DeleteProduct']);
+
+    });
+
+    //Send mail
+    Route::get('/check-out', [CheckOutController::class, 'index']);
+    Route::get('/mail', [MailController::class, 'index']);
+
+
+    //logout
+    Route::get('/logout', function(){
+        Auth::logout();
+        session()->forget('cart');
+        session()->forget('totalQty.qty');
+        return redirect('login.html');
+    });
 });
 
-Route::get('/check-out', [CheckOutController::class, 'index']);
-Route::get('/mail', [MailController::class, 'index']);
-
-
-//logout
-Route::get('/logout', function(){
-    Auth::logout();
-    session()->forget('cart');
-    session()->forget('totalQty.qty');
-    return redirect('login.html');
-});
 
 
 
@@ -205,9 +229,4 @@ Route::get('/logout', function(){
 
 
 
-//loginvao
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/demo', [DemoController::class, 'helloWorld']);
